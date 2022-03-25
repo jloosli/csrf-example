@@ -46,7 +46,7 @@ export const register = (app: Application) => {
       title: 'Deposit | ' + defaultRenderOptions.title,
       header: 'Deposit',
       balance: new Intl.NumberFormat('en-US',
-        {style: 'currency', currency: 'USD'}).format(balance),
+          {style: 'currency', currency: 'USD'}).format(balance),
       name,
       loggedIn: isLoggedIn(req),
     });
@@ -66,7 +66,7 @@ export const register = (app: Application) => {
       title: 'Transfer | ' + defaultRenderOptions.title,
       header: 'Transfer',
       balance: new Intl.NumberFormat('en-US',
-        {style: 'currency', currency: 'USD'}).format(balance),
+          {style: 'currency', currency: 'USD'}).format(balance),
       name,
       transfer: false, loggedIn: isLoggedIn(req),
     });
@@ -82,11 +82,11 @@ export const register = (app: Application) => {
       title: 'Transfer | ' + defaultRenderOptions.title,
       header: 'Transfer',
       balance: new Intl.NumberFormat('en-US',
-        {style: 'currency', currency: 'USD'}).format(newBalance),
+          {style: 'currency', currency: 'USD'}).format(newBalance),
       name,
       transfer: {
         amount: new Intl.NumberFormat('en-US',
-          {style: 'currency', currency: 'USD'}).format(transferAmount),
+            {style: 'currency', currency: 'USD'}).format(transferAmount),
         destination: req.body.destination,
       },
       loggedIn: isLoggedIn(req),
