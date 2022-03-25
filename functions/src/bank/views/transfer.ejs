@@ -8,10 +8,21 @@
 <div class="container">
     <h2><%= header %></h2>
     <h3>Balance for <%= name %>: <%= balance %></h3>
-    <form action="/deposit" method="post">
+    <% if (transfer) { %>
+        <div class="card-panel teal lighten-2 red-text">
+            <h2>You transferred <%= transfer.amount %> to account
+                {<%= transfer.destination %>}</h2>
+        </div>
+    <% } %>
+    <form action="/transfer" method="post">
         <div class="form-group">
             <label for="amount">Amount</label>
             <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount">
+        </div>
+        <div class="form-group">
+            <label for="destination">Destination</label>
+            <input type="text" class="form-control" id="destination" name="destination"
+                   placeholder="Destination Account">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

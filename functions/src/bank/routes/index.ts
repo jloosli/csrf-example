@@ -14,13 +14,14 @@ export const register = (app: Application) => {
   app.get('/', (req: Request, res: Response) => {
     res.render('index', {
       ...defaultRenderOptions,
+      loggedIn: isLoggedIn(req),
     });
   });
   app.get('/login', (req: Request, res: Response) => {
     res.render('login', {
       ...defaultRenderOptions,
       title: 'Login | ' + defaultRenderOptions.title,
-      header: 'Login',
+      header: 'Login', loggedIn: isLoggedIn(req),
     });
   });
   app.post('/login', (req: Request, res: Response) => {
@@ -39,6 +40,7 @@ export const register = (app: Application) => {
       balance: new Intl.NumberFormat('en-US',
           {style: 'currency', currency: 'USD'}).format(balance),
       name,
+      loggedIn: isLoggedIn(req),
     });
   });
 
@@ -46,6 +48,47 @@ export const register = (app: Application) => {
     const newBalance = (req.cookies.balance || 0) + parseInt(req.body.amount);
     res.cookie('balance', newBalance);
     res.redirect('/deposit');
+  });
+
+  app.get('/transfer', [loggedIn], (req: Request, res: Response) => {
+    const name = req.cookies.name;
+    const balance = req.cookies.balance || 0;
+    res.render('transfer', {
+      ...defaultRenderOptions,
+      title: 'Transfer | ' + defaultRenderOptions.title,
+      header: 'Transfer',
+      balance: new Intl.NumberFormat('en-US',
+          {style: 'currency', currency: 'USD'}).format(balance),
+      name,
+      transfer: false, loggedIn: isLoggedIn(req),
+    });
+  });
+
+  app.post('/transfer', [loggedIn], (req: Request, res: Response) => {
+    const name = req.cookies.name;
+    const transferAmount = parseInt(req.body.amount);
+    const newBalance = (req.cookies.balance || 0) - transferAmount;
+    res.cookie('balance', newBalance);
+    res.render('transfer', {
+      ...defaultRenderOptions,
+      title: 'Transfer | ' + defaultRenderOptions.title,
+      header: 'Transfer',
+      balance: new Intl.NumberFormat('en-US',
+          {style: 'currency', currency: 'USD'}).format(newBalance),
+      name,
+      transfer: {
+        amount: new Intl.NumberFormat('en-US',
+            {style: 'currency', currency: 'USD'}).format(transferAmount),
+        destination: req.body.destination,
+      },
+      loggedIn: isLoggedIn(req),
+    });
+  });
+
+  app.get('/logout', (req: Request, res: Response) => {
+    res.clearCookie('name');
+    res.clearCookie('balance');
+    res.redirect('/');
   });
 
   app.get('*', (req: Request, res: Response) => {
@@ -60,3 +103,5 @@ const loggedIn = (req: Request, res: Response, next: () => void) => {
     res.redirect('/login');
   }
 };
+
+const isLoggedIn = (req: Request) => !!req.cookies.name;
