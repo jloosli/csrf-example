@@ -6,7 +6,11 @@
 <body>
 <%- include('partials/header'); %>
 <div class="container">
+    <% if (loggedIn) { %>
+        <h1>Welcome, <%= name %></h1>
+    <% } else { %>
     <a class="btn" href="/login"><i class="material-icons right">arrow_forward</i>Log In</a>
+    <% } %>
 </div>
 </body>
 </html>

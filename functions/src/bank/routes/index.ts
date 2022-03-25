@@ -1,6 +1,7 @@
 import * as path from 'path';
 import {Application, Request, Response} from 'express';
 import * as cookieParser from 'cookie-parser';
+import * as cors from 'cors';
 
 const defaultRenderOptions = {
   title: 'Super Secure Bank',
@@ -10,11 +11,15 @@ const defaultRenderOptions = {
 export const register = (app: Application) => {
   app.set('views', path.join(__dirname, '..', 'views'));
   app.set('view engine', 'ejs');
+  app.use(cors());
   app.use(cookieParser());
+
   app.get('/', (req: Request, res: Response) => {
+    const name = req.cookies.name;
     res.render('index', {
       ...defaultRenderOptions,
       loggedIn: isLoggedIn(req),
+      name,
     });
   });
   app.get('/login', (req: Request, res: Response) => {
