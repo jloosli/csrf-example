@@ -17,7 +17,7 @@ export const register = (app: Application) => {
 
   app.get('/', (req: Request, res: Response) => {
     functions.logger.log('index', req.cookies);
-    functions.logger.log('isLoggedIn', isLoggedIn(req));
+    functions.logger.log('isLoggedIn:index', isLoggedIn(req));
     const name = req.cookies.name;
     res.render('index', {
       ...defaultRenderOptions,
@@ -112,4 +112,10 @@ const loggedIn = (req: Request, res: Response, next: () => void) => {
   }
 };
 
-const isLoggedIn = (req: Request) => !!req.cookies.name;
+const isLoggedIn = (req: Request) => {
+  functions.logger.log('isLoggedIn', req.cookies);
+  const res = Boolean(req?.cookies?.name);
+  functions.logger.log('isLoggedIn:res', res);
+  return res;
+};
+
