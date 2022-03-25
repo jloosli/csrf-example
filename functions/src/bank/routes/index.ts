@@ -16,8 +16,6 @@ export const register = (app: Application) => {
   app.use(cookieParser());
 
   app.get('/', (req: Request, res: Response) => {
-    functions.logger.log('index', req.cookies);
-    functions.logger.log('isLoggedIn:index', isLoggedIn(req));
     const name = req.cookies.name;
     res.render('index', {
       ...defaultRenderOptions,
@@ -113,7 +111,7 @@ const loggedIn = (req: Request, res: Response, next: () => void) => {
 };
 
 const isLoggedIn = (req: Request) => {
-  functions.logger.log('isLoggedIn', req.cookies);
+  functions.logger.log('isLoggedIn', req);
   const res = Boolean(req?.cookies?.name);
   functions.logger.log('isLoggedIn:res', res);
   return res;
