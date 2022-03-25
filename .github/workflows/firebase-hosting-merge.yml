@@ -21,3 +21,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPER_SECURE_BANK }}'
           channelId: live
           projectId: super-secure-bank
+      - run: npx firebase-tools deploy --only functions --token "$FIREBASE_TOKEN" --non-interactive
+        env:
+          FIREBASE_TOKEN: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPER_SECURE_BANK }}"
+
