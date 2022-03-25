@@ -14,13 +14,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: cd functions && npm install && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUPER_SECURE_BANK }}'
-          channelId: live
-          projectId: super-secure-bank
+      - run: cd functions && npm install
       - run: npx firebase-tools deploy --only functions --token "$FIREBASE_TOKEN" --non-interactive
         env:
           FIREBASE_TOKEN: "${{ secrets.FIREBASE_TOKEN }}"
