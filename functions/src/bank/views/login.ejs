@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body>
+<%- include('partials/header'); %>
+<div class="container">
+    <h2><%= header %></h2>
+    <form action="/login" method="post">
+        <div class="form-group">
+            <label for="name">Username</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="material-icons right">arrow_forward</i>Log In</button>
+    </form>
+</div>
+</body>
+</html>

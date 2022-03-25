@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body>
+<%- include('partials/header'); %>
+<div class="container">
+    <h2><%= header %></h2>
+    <h3>Balance: <%= balance %></h3>
+    <form action="/deposit" method="post">
+        <div class="form-group">
+            <label for="transaction-type">Amount</label>
+            <input type="text" class="form-control" id="transaction-type" name="amount" placeholder="Amount">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
